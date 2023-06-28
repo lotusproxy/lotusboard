@@ -14,12 +14,20 @@ I have no intention in breaking open source protocols, but i don't understand th
 
 # What has been modified
 
-Vmess
- 
- - TLS fingerprint, randomized by default
+Hysteria
+ - Multiple bugs fixed
+
+VLESS
+ - Add vless support
+ - Multi GUN mode on grpc
+ - other stuffs that Vmess has
+
+Vmess 
+ - TLS fingerprint, firefox by default
  - Websocket ed4096(0rtt enabled for xray)
  - Subscription info was translated into English
- - Auto zero encryption when TLS enabled **This is bascially VLESS**
+ - Auto zero encryption when TLS enabled
+ 
 
 Subscription:
 
