@@ -1,12 +1,6 @@
 # Lotusboard
 
-# AD
-
-We've made a backend for hysteria which is newly supported by v2board upstream, lotusboard fixed them and open PRs to upstream
-
-Bodhi at https://github.com/lotusproxy/bodhi
-
-# Go latest-release branch for latest stable, main is for develop purpose
+### Go latest-release branch for latest stable, main is for develop purpose
 
 # Modified v2board, probably enhancement
 
