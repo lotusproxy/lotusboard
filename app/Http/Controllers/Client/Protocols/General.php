@@ -25,7 +25,11 @@ class General
 
         foreach ($servers as $item) {
             if ($item['type'] === 'vmess') {
-                $uri .= self::buildVmess($user['uuid'], $item);
+                if (is_array($item['tags']) && in_array("VLESS", $item['tags'])) {
+                    $uri .= self::buildVless($user['uuid'], $item);
+                } else {
+                    $uri .= self::buildVmess($user['uuid'], $item);
+	        }
             }
             if ($item['type'] === 'shadowsocks') {
                 $uri .= self::buildShadowsocks($user['uuid'], $item);
@@ -130,6 +134,41 @@ class General
 //            'obfsParam' => $server['server_key']
         ]);
         $uri = "hysteria://{$remote}:{$server['port']}?{$query}#{$name}";
+        $uri .= "\r\n";
+        return $uri;
+    }
+    public static function buildVless($uuid, $server)
+    {
+        $name = rawurlencode($server['name']);
+        $config = [];
+        $config['type'] = $server['network'];
+        $config['encryption'] = 'none';
+        $config['security'] = $server['tls'] ? "tls" : "none";
+        if ($server['tls']) {
+            $config['fp'] = 'firefox';
+            if ($server['tlsSettings']) {
+                $tlsSettings = $server['tlsSettings'];
+                if (isset($tlsSettings['serverName']) && !empty($tlsSettings['serverName']))
+                    $config['sni'] = $tlsSettings['serverName'];
+            }
+        }
+        if ((string)$server['network'] === 'tcp') {
+            $tcpSettings = $server['networkSettings'];
+            if (isset($tcpSettings['header']['type'])) $config['type'] = $tcpSettings['header']['type'];
+            if (isset($tcpSettings['header']['request']['path'][0])) $config['path'] = $tcpSettings['header']['request']['path'][0];
+        }
+        if ((string)$server['network'] === 'ws') {
+            $wsSettings = $server['networkSettings'];
+            if (isset($wsSettings['path'])) $config['path'] = "${wsSettings['path']}?ed=4096";
+            if (isset($wsSettings['headers']['Host'])) $config['host'] = $wsSettings['headers']['Host'];
+        }
+        if ((string)$server['network'] === 'grpc') {
+            $grpcSettings = $server['networkSettings'];
+            if (isset($grpcSettings['serviceName'])) $config['serviceName'] = $grpcSettings['serviceName'];
+            $config['mode'] = 'multi';
+        }
+        $query = http_build_query($config);
+        $uri = "vless://{$uuid}@{$server['host']}:{$server['port']}?{$query}#{$name}";
         $uri .= "\r\n";
         return $uri;
     }
