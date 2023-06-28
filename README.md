@@ -7,7 +7,7 @@
 
 # Modified v2board, probably enhancement
 
-I have no intention in breaking open source protocols, but i don't understand them, so if you have some suggestion on this please tell me in issue
+I have no intention in breaking open source license, but i don't understand them, so if you have some suggestion on this please tell me in issue
 
 # What has been modified
 
