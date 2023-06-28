@@ -104,6 +104,7 @@ class General
 
     public static function buildTrojan($password, $server)
     {
+        $remote = filter_var($server['host'], FILTER_VALIDATE_IP, FILTER_FLAG_IPV6) ? '[' . $server['host'] . ']' : $server['host'];
         $name = rawurlencode($server['name']);
         $query = http_build_query([
             'allowInsecure' => $server['allow_insecure'],
@@ -111,7 +112,7 @@ class General
             'sni' => $server['server_name'],
             'fp' => 'firefox'
         ]);
-        $uri = "trojan://{$password}@{$server['host']}:{$server['port']}?{$query}#{$name}";
+        $uri = "trojan://{$password}@{$remote}:{$server['port']}?{$query}#{$name}";
         $uri .= "\r\n";
         return $uri;
     }
