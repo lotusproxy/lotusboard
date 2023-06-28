@@ -1,4 +1,7 @@
 # Lotusboard
+### UserManual
+
+[WIKI](https://github.com/lotusproxy/lotusboard-docker/wiki)
 
 ### Go latest-release branch for latest stable, main is for develop purpose
 
@@ -28,7 +31,3 @@ Subscription:
  - ClashVPN mode profile (Proxy all traffic except local and icmp), add &flag=gclh to fetch it
 
  - Simplified the default clash config
-
-# Install with docker
-
-[Read Docs](https://github.com/lotusproxy/lotusboard-docker/wiki)
