@@ -147,6 +147,9 @@ class General
         $config['security'] = $server['tls'] ? "tls" : "none";
         if ($server['tls']) {
             $config['fp'] = 'firefox';
+            if (is_array($server['tags']) && in_array("VLESS", $server['tags']) && in_array("XTLS", $server['tags'])) {
+                    $config['flow'] = "xtls-rprx-vision-udp443";
+            }
             if ($server['tlsSettings']) {
                 $tlsSettings = $server['tlsSettings'];
                 if (isset($tlsSettings['serverName']) && !empty($tlsSettings['serverName']))
