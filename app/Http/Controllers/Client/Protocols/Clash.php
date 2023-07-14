@@ -215,6 +215,9 @@ class Clash
 
         if ($server['tls']) {
             $array['tls'] = true;
+            if (is_array($server['tags']) && in_array("VLESS", $server['tags']) && in_array("XTLS", $server['tags'])) {
+                    $array['flow'] = "xtls-rprx-vision-udp443";
+            }
             if ($server['tlsSettings']) {
                 $tlsSettings = $server['tlsSettings'];
                 if (isset($tlsSettings['allowInsecure']) && !empty($tlsSettings['allowInsecure']))
